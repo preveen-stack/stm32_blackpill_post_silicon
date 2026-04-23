@@ -10,6 +10,13 @@
 #define RCC_AHB1ENR     (*(volatile unsigned int *)(RCC_BASE + 0x30))
 #define RCC_APB1ENR     (*(volatile unsigned int *)(RCC_BASE + 0x40))
 
+/* RCC CR register */
+#define RCC_CR        (*(volatile unsigned int *)(RCC_BASE + 0x00))
+
+#define RCC_CR_HSEON  (1 << 16)
+#define RCC_CR_HSERDY (1 << 17)
+#define RCC_CR_HSEBYP (1 << 18)  // optional (for external clock, not crystal)
+
 /* GPIOA */
 #define GPIOA_BASE      (AHB1PERIPH_BASE + 0x0000UL)
 #define GPIOA_MODER     (*(volatile unsigned int *)(GPIOA_BASE + 0x00))

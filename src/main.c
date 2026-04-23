@@ -4,9 +4,11 @@
 
 // Forward declarations
 int test_sram(void);
+int test_hse(void);
 
 test_t tests[] = {
     {"SRAM Test", test_sram},
+    {"HSE Test", test_hse}
 };
 int main1(void) {
     uart_init();
@@ -30,5 +32,8 @@ int main(void) {
 
     uart_print("=== TEST END ===\r\n");
 
-    while (1) pc13_toggle();
+    while (1) {
+        pc13_toggle();
+        uart_print("RESTART to TEST AGAGIN...");
+    } 
 }

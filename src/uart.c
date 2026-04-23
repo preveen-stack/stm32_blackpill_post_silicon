@@ -22,7 +22,8 @@ void uart_init(void) {
     GPIOA_OSPEEDR |= (3 << (9*2)) | (3 << (10*2));
 
     /* USART */
-    USART1_BRR = 0x0683;
+    // USART1_BRR = 0x0683; // 9600 @ 16 MHz
+    USART1_BRR = 0x008B; // 115200 @ 16 MHz
     USART1_CR1 = (1 << 13) | (1 << 3) | (1 << 2); // UE, TE, RE
 }
 

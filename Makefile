@@ -2,7 +2,7 @@ CC      = arm-none-eabi-gcc
 AS      = arm-none-eabi-gcc
 OBJCOPY = arm-none-eabi-objcopy
 
-CFLAGS  = -mcpu=cortex-m4 -mthumb -O0 -g -Wall -ffreestanding -Iinclude
+CFLAGS  = -mcpu=cortex-m4 -mthumb -O2 -g -Wall -ffreestanding -Iinclude
 ASFLAGS = -mcpu=cortex-m4 -mthumb
 LDFLAGS = -T linker.ld -nostdlib -Wl,-Map=firmware.map
 
@@ -17,7 +17,8 @@ tests/test_runner.c \
 tests/test_sram.c \
 tests/test_hse.c \
 tests/test_timer.c \
-tests/test_clock_measure.c 
+tests/test_clock_measure.c  \
+tests/test_dsp.c
 
 ASM_SRCS = \
 startup_stm32f411.s

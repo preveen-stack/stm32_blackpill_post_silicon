@@ -9,14 +9,14 @@ int test_sram(void);
 int test_hse(void);
 int test_timer(void);
 int test_clock_measure(void);
+int test_dsp(void);
 
 test_t tests[] = {
-//    {"SRAM Test", test_sram},
- //   {"SRAM Test", test_sram},
-      {"Clock Measure", test_clock_measure},
+    {"DSP Test", test_dsp},
+    {"Clock Measure", test_clock_measure},
     {"Timer Test", test_timer},
-  {"SRAM Test", test_sram},
-//    {"HSE Test", test_hse}
+    {"SRAM Test", test_sram},
+    // {"HSE Test", test_hse}
 };
 int main1(void) {
     uart_init();

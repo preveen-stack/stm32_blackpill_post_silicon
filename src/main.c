@@ -1,3 +1,4 @@
+#include "clock.h"
 #include "uart.h"
 #include "pc13.h"
 #include "test.h"
@@ -6,10 +7,12 @@
 int test_sram(void);
 int test_hse(void);
 int test_timer(void);
+int test_clock_measure(void);
 
 test_t tests[] = {
 //    {"SRAM Test", test_sram},
  //   {"SRAM Test", test_sram},
+      {"Clock Measure", test_clock_measure},
     {"Timer Test", test_timer},
   {"SRAM Test", test_sram},
     //{"HSE Test", test_hse}
@@ -27,6 +30,8 @@ int main1(void) {
 }
 
 int main(void) {
+    clock_init_pll_hsi();
+
     pc13_init();
     uart_init();
 
@@ -38,6 +43,6 @@ int main(void) {
 
     while (1) {
         pc13_toggle();
-        uart_print("RESTART to TEST AGAGIN...");
+       // uart_print("RESTART to TEST AGAGIN...\r\n");
     } 
 }

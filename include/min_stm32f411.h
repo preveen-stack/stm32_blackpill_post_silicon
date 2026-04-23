@@ -77,4 +77,21 @@
 #define TIM_CR1_CEN    (1 << 0)
 #define TIM_SR_UIF     (1 << 0)
 
+#define RCC_CFGR     (*(volatile unsigned int *)(RCC_BASE + 0x08))
+#define RCC_PLLCFGR  (*(volatile unsigned int *)(RCC_BASE + 0x04))
+
+#define RCC_CR_PLLON   (1 << 24)
+#define RCC_CR_PLLRDY  (1 << 25)
+
+/* CFGR SW bits */
+#define RCC_CFGR_SW_PLL  (2 << 0)
+#define RCC_CFGR_SWS_PLL (2 << 2)
+
+#define FLASH_ACR (*(volatile unsigned int *)0x40023C00)
+
+#define RCC_CR_HSION   (1 << 0)
+#define RCC_CR_HSIRDY  (1 << 1)
+
+#define TIM2_CNT (*(volatile unsigned int *)(TIM2_BASE + 0x24))
+
 #endif

@@ -11,10 +11,12 @@ C_SRCS = \
 src/main.c \
 src/uart.c \
 src/pc13.c \
+src/clock.c \
 tests/test_runner.c \
 tests/test_sram.c \
 tests/test_hse.c \
-tests/test_timer.c
+tests/test_timer.c \
+tests/test_clock_measure.c 
 
 ASM_SRCS = \
 startup_stm32f411.s

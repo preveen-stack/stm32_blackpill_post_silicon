@@ -23,7 +23,8 @@ void uart_init(void) {
 
     /* USART */
     // USART1_BRR = 0x0683; // 9600 @ 16 MHz
-    USART1_BRR = 0x008B; // 115200 @ 16 MHz
+    // USART1_BRR = 0x008B; // 115200 @ 16 MHz
+    USART1_BRR = 0x0011; // 921600 @ 16 MHz
     USART1_CR1 = (1 << 13) | (1 << 3) | (1 << 2); // UE, TE, RE
 }
 

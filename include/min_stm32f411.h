@@ -61,4 +61,20 @@
 #define GPIOA_OSPEEDR (*(volatile unsigned int *)(GPIOA_BASE + 0x08))
 #define GPIOA_OTYPER  (*(volatile unsigned int *)(GPIOA_BASE + 0x04))
 #define GPIOA_PUPDR   (*(volatile unsigned int *)(GPIOA_BASE + 0x0C))
+
+/* TIM2 (APB1) */
+#define TIM2_BASE      (APB1PERIPH_BASE + 0x0000UL)
+
+#define TIM2_CR1       (*(volatile unsigned int *)(TIM2_BASE + 0x00))
+#define TIM2_SR        (*(volatile unsigned int *)(TIM2_BASE + 0x10))
+#define TIM2_PSC       (*(volatile unsigned int *)(TIM2_BASE + 0x28))
+#define TIM2_ARR       (*(volatile unsigned int *)(TIM2_BASE + 0x2C))
+
+/* RCC enable */
+#define RCC_APB1ENR_TIM2EN (1 << 0)
+
+/* Bits */
+#define TIM_CR1_CEN    (1 << 0)
+#define TIM_SR_UIF     (1 << 0)
+
 #endif

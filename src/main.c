@@ -5,10 +5,14 @@
 // Forward declarations
 int test_sram(void);
 int test_hse(void);
+int test_timer(void);
 
 test_t tests[] = {
-    {"SRAM Test", test_sram},
-    {"HSE Test", test_hse}
+//    {"SRAM Test", test_sram},
+ //   {"SRAM Test", test_sram},
+    {"Timer Test", test_timer},
+  {"SRAM Test", test_sram},
+    //{"HSE Test", test_hse}
 };
 int main1(void) {
     uart_init();

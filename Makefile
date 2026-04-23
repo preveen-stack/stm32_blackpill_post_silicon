@@ -13,7 +13,8 @@ src/uart.c \
 src/pc13.c \
 tests/test_runner.c \
 tests/test_sram.c \
-tests/test_hse.c
+tests/test_hse.c \
+tests/test_timer.c
 
 ASM_SRCS = \
 startup_stm32f411.s

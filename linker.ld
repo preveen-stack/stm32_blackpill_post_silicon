@@ -7,14 +7,22 @@ MEMORY
 SECTIONS
 {
   .text : {
+    *(.isr_vector)
     *(.text*)
+    *(.rodata*)
   } > FLASH
 
   .data : {
+    _sdata = .;
     *(.data*)
-  } > RAM
+    _edata = .;
+  } > RAM AT > FLASH
+
+  _sidata = LOADADDR(.data);
 
   .bss : {
+    _sbss = .;
     *(.bss*)
+    _ebss = .;
   } > RAM
 }

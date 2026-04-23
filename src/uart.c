@@ -1,28 +1,34 @@
 #include "min_stm32f411.h"
 
+/* Add this in header if missing */
+#define GPIOA_AFRH (*(volatile unsigned int *)(GPIOA_BASE + 0x24))
+
 void uart_init(void) {
-    /* Enable clocks */
-    RCC_AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
-    RCC_APB1ENR |= RCC_APB1ENR_USART2EN;
+    RCC_AHB1ENR |= (1 << 0);   // GPIOA
+    RCC_APB2ENR |= (1 << 4);   // USART1
 
-    /* PA2 → Alternate Function (AF7 for USART2) */
-    GPIOA_MODER &= ~(3 << (2 * 2));
-    GPIOA_MODER |=  (2 << (2 * 2));
+    /* PA9, PA10 AF mode */
+    GPIOA_MODER &= ~(3 << (9*2));
+    GPIOA_MODER |=  (2 << (9*2));
 
-    /* Set AF7 (USART2) */
-    GPIOA_AFRL &= ~(0xF << (4 * 2));
-    GPIOA_AFRL |=  (7 << (4 * 2));
+    GPIOA_MODER &= ~(3 << (10*2));
+    GPIOA_MODER |=  (2 << (10*2));
 
-    /* Baud rate (9600 @ 16 MHz) */
-    USART2_BRR = 0x0683;
+    /* AFRH */
+    GPIOA_AFRH &= ~(0xFF << 4);
+    GPIOA_AFRH |=  (0x77 << 4);  // AF7 for both
 
-    /* Enable UART */
-    USART2_CR1 = USART_CR1_TE | USART_CR1_UE;
+    /* Speed high */
+    GPIOA_OSPEEDR |= (3 << (9*2)) | (3 << (10*2));
+
+    /* USART */
+    USART1_BRR = 0x0683;
+    USART1_CR1 = (1 << 13) | (1 << 3) | (1 << 2); // UE, TE, RE
 }
 
 void uart_print(const char *s) {
     while (*s) {
-        while (!(USART2_SR & USART_SR_TXE));
-        USART2_DR = *s++;
+        while (!(USART1_SR & USART_SR_TXE));
+        USART1_DR = *s++;
     }
 }

@@ -12,6 +12,7 @@ src/main.c \
 src/uart.c \
 src/pc13.c \
 src/clock.c \
+src/timer.c \
 tests/test_runner.c \
 tests/test_sram.c \
 tests/test_hse.c \

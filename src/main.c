@@ -1,6 +1,7 @@
 #include "clock.h"
 #include "uart.h"
 #include "pc13.h"
+#include "timer.h"
 #include "test.h"
 
 // Forward declarations
@@ -15,7 +16,7 @@ test_t tests[] = {
       {"Clock Measure", test_clock_measure},
     {"Timer Test", test_timer},
   {"SRAM Test", test_sram},
-    //{"HSE Test", test_hse}
+//    {"HSE Test", test_hse}
 };
 int main1(void) {
     uart_init();
@@ -35,6 +36,8 @@ int main(void) {
     pc13_init();
     uart_init();
 
+    tim2_init();
+
     uart_print("\r\n=== POST SILICON TEST START ===\r\n");
 
     run_tests(tests, sizeof(tests)/sizeof(test_t));
@@ -42,7 +45,8 @@ int main(void) {
     uart_print("=== TEST END ===\r\n");
 
     while (1) {
-        pc13_toggle();
-       // uart_print("RESTART to TEST AGAGIN...\r\n");
+       pc13_toggle();
+       uart_print("RESTART to TEST AGAGIN...\r\n");
+       delay_ms(10000);
     } 
 }

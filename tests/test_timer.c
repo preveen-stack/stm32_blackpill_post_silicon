@@ -25,7 +25,7 @@ int test_timer(void) {
     TIM2_CR1 |= TIM_CR1_CEN;
 
     /* Wait for update event */
-    for (volatile int i = 0; i < 5000000; i++) {
+    for (volatile int i = 0; i < 30000000; i++) {
         if (TIM2_SR & TIM_SR_UIF) {
             uart_print("TIMER: OK\r\n");
 

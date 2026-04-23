@@ -50,6 +50,10 @@ firmware.bin: firmware.elf
 flash: firmware.bin
 	st-flash write firmware.bin 0x08000000
 
+# Reset
+reset:
+	st-flash reset
+
 # Clean
 clean:
 	rm -f $(OBJS) firmware.elf firmware.bin firmware.map

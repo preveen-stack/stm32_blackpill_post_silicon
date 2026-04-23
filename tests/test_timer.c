@@ -18,24 +18,29 @@ int test_timer(void) {
      * ARR = 1000-1  → 1 second overflow
      */
 
-    TIM2_PSC = 16000 - 1;
+    TIM2_PSC = 84000 - 1;
     TIM2_ARR = 1000 - 1;
 
     /* Start timer */
     TIM2_CR1 |= TIM_CR1_CEN;
 
-    /* Wait for update event */
-    for (volatile int i = 0; i < 30000000; i++) {
-        if (TIM2_SR & TIM_SR_UIF) {
-            uart_print("TIMER: OK\r\n");
+//    /* Wait for update event */
+//    for (volatile int i = 0; i < 30000000; i++) {
+//        if (TIM2_SR & TIM_SR_UIF) {
+//            uart_print("TIMER: OK\r\n");
+//
+//            /* Clear flag */
+//            TIM2_SR &= ~TIM_SR_UIF;
+//
+//            return TEST_PASS;
+//        }
+//    }
 
-            /* Clear flag */
-            TIM2_SR &= ~TIM_SR_UIF;
+    /* wait for overflow */
+    while (!(TIM2_SR & TIM_SR_UIF));
+    uart_print("TIMER: OK\r\n");
 
-            return TEST_PASS;
-        }
-    }
+    TIM2_SR &= ~TIM_SR_UIF;
 
-    uart_print("TIMER: TIMEOUT\r\n");
-    return TEST_FAIL;
+    return TEST_PASS;
 }

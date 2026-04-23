@@ -21,7 +21,7 @@ LOAD tests/test_timer.o
 LOAD tests/test_clock_measure.o
 LOAD startup_stm32f411.o
 
-.text           0x08000000      0x9a1
+.text           0x08000000      0x965
  *(.isr_vector)
  .isr_vector    0x08000000      0x188 startup_stm32f411.o
  *(.text*)
@@ -43,47 +43,46 @@ LOAD startup_stm32f411.o
                 0x080004dc                test_sram
  .text          0x08000580       0x74 tests/test_hse.o
                 0x08000580                test_hse
- .text          0x080005f4       0xac tests/test_timer.o
+ .text          0x080005f4       0x84 tests/test_timer.o
                 0x080005f4                test_timer
- .text          0x080006a0      0x17c tests/test_clock_measure.o
-                0x080006c2                test_clock_measure
- .text          0x0800081c        0x0 startup_stm32f411.o
+ .text          0x08000678      0x17c tests/test_clock_measure.o
+                0x0800069a                test_clock_measure
+ .text          0x080007f4        0x0 startup_stm32f411.o
  .text.Reset_Handler
-                0x0800081c       0x44 startup_stm32f411.o
-                0x0800081c                Reset_Handler
+                0x080007f4       0x44 startup_stm32f411.o
+                0x080007f4                Reset_Handler
  .text.Default_Handler
-                0x08000860        0x2 startup_stm32f411.o
+                0x08000838        0x2 startup_stm32f411.o
  *(.rodata*)
- *fill*         0x08000862        0x2 
- .rodata        0x08000864       0x67 src/main.o
- *fill*         0x080008cb        0x1 
- .rodata        0x080008cc       0x1b tests/test_runner.o
- *fill*         0x080008e7        0x1 
- .rodata        0x080008e8       0x2f tests/test_hse.o
- *fill*         0x08000917        0x1 
- .rodata        0x08000918       0x2d tests/test_timer.o
- *fill*         0x08000945        0x3 
- .rodata        0x08000948       0x59 tests/test_clock_measure.o
+ *fill*         0x0800083a        0x2 
+ .rodata        0x0800083c       0x67 src/main.o
+ *fill*         0x080008a3        0x1 
+ .rodata        0x080008a4       0x1b tests/test_runner.o
+ *fill*         0x080008bf        0x1 
+ .rodata        0x080008c0       0x2f tests/test_hse.o
+ *fill*         0x080008ef        0x1 
+ .rodata        0x080008f0       0x1c tests/test_timer.o
+ .rodata        0x0800090c       0x59 tests/test_clock_measure.o
 
-.glue_7         0x080009a4        0x0
- .glue_7        0x080009a4        0x0 linker stubs
+.glue_7         0x08000968        0x0
+ .glue_7        0x08000968        0x0 linker stubs
 
-.glue_7t        0x080009a4        0x0
- .glue_7t       0x080009a4        0x0 linker stubs
+.glue_7t        0x08000968        0x0
+ .glue_7t       0x08000968        0x0 linker stubs
 
-.vfp11_veneer   0x080009a4        0x0
- .vfp11_veneer  0x080009a4        0x0 linker stubs
+.vfp11_veneer   0x08000968        0x0
+ .vfp11_veneer  0x08000968        0x0 linker stubs
 
-.v4_bx          0x080009a4        0x0
- .v4_bx         0x080009a4        0x0 linker stubs
+.v4_bx          0x08000968        0x0
+ .v4_bx         0x08000968        0x0 linker stubs
 
-.iplt           0x080009a4        0x0
- .iplt          0x080009a4        0x0 src/main.o
+.iplt           0x08000968        0x0
+ .iplt          0x08000968        0x0 src/main.o
 
-.rel.dyn        0x080009a4        0x0
- .rel.iplt      0x080009a4        0x0 src/main.o
+.rel.dyn        0x08000968        0x0
+ .rel.iplt      0x08000968        0x0 src/main.o
 
-.data           0x20000000       0x18 load address 0x080009a1
+.data           0x20000000       0x18 load address 0x08000965
                 0x20000000                        _sdata = .
  *(.data*)
  .data          0x20000000       0x18 src/main.o
@@ -98,12 +97,12 @@ LOAD startup_stm32f411.o
  .data          0x20000018        0x0 tests/test_clock_measure.o
  .data          0x20000018        0x0 startup_stm32f411.o
                 0x20000018                        _edata = .
-                0x080009a1                        _sidata = LOADADDR (.data)
+                0x08000965                        _sidata = LOADADDR (.data)
 
-.igot.plt       0x20000018        0x0 load address 0x080009b9
+.igot.plt       0x20000018        0x0 load address 0x0800097d
  .igot.plt      0x20000018        0x0 src/main.o
 
-.bss            0x20000018        0x0 load address 0x080009b9
+.bss            0x20000018        0x0 load address 0x0800097d
                 0x20000018                        _sbss = .
  *(.bss*)
  .bss           0x20000018        0x0 src/main.o
@@ -120,7 +119,7 @@ LOAD startup_stm32f411.o
 OUTPUT(firmware.elf elf32-littlearm)
 LOAD linker stubs
 
-.debug_info     0x00000000      0x644
+.debug_info     0x00000000      0x627
  .debug_info    0x00000000      0x15a src/main.o
  .debug_info    0x0000015a       0x6f src/uart.o
  .debug_info    0x000001c9       0x47 src/pc13.o
@@ -128,10 +127,10 @@ LOAD linker stubs
  .debug_info    0x00000257       0xfa tests/test_runner.o
  .debug_info    0x00000351       0xd4 tests/test_sram.o
  .debug_info    0x00000425       0x85 tests/test_hse.o
- .debug_info    0x000004aa       0x85 tests/test_timer.o
- .debug_info    0x0000052f      0x115 tests/test_clock_measure.o
+ .debug_info    0x000004aa       0x68 tests/test_timer.o
+ .debug_info    0x00000512      0x115 tests/test_clock_measure.o
 
-.debug_abbrev   0x00000000      0x58f
+.debug_abbrev   0x00000000      0x56e
  .debug_abbrev  0x00000000      0x149 src/main.o
  .debug_abbrev  0x00000149       0x74 src/uart.o
  .debug_abbrev  0x000001bd       0x2f src/pc13.o
@@ -139,8 +138,8 @@ LOAD linker stubs
  .debug_abbrev  0x0000021b       0xfa tests/test_runner.o
  .debug_abbrev  0x00000315       0x7d tests/test_sram.o
  .debug_abbrev  0x00000392       0x92 tests/test_hse.o
- .debug_abbrev  0x00000424       0x92 tests/test_timer.o
- .debug_abbrev  0x000004b6       0xd9 tests/test_clock_measure.o
+ .debug_abbrev  0x00000424       0x71 tests/test_timer.o
+ .debug_abbrev  0x00000495       0xd9 tests/test_clock_measure.o
 
 .debug_aranges  0x00000000      0x120
  .debug_aranges
@@ -162,7 +161,7 @@ LOAD linker stubs
  .debug_aranges
                 0x00000100       0x20 tests/test_clock_measure.o
 
-.debug_line     0x00000000      0x65a
+.debug_line     0x00000000      0x64d
  .debug_line    0x00000000       0x9e src/main.o
  .debug_line    0x0000009e       0xb6 src/uart.o
  .debug_line    0x00000154       0x5b src/pc13.o
@@ -170,8 +169,8 @@ LOAD linker stubs
  .debug_line    0x000002d3       0x94 tests/test_runner.o
  .debug_line    0x00000367       0xbc tests/test_sram.o
  .debug_line    0x00000423       0x8b tests/test_hse.o
- .debug_line    0x000004ae       0xad tests/test_timer.o
- .debug_line    0x0000055b       0xff tests/test_clock_measure.o
+ .debug_line    0x000004ae       0xa0 tests/test_timer.o
+ .debug_line    0x0000054e       0xff tests/test_clock_measure.o
 
 .debug_str      0x00000000      0x212
  .debug_str     0x00000000      0x212 src/main.o
@@ -220,7 +219,7 @@ LOAD linker stubs
  .ARM.attributes
                 0x0000019e       0x21 startup_stm32f411.o
 
-.debug_frame    0x00000000      0x274
+.debug_frame    0x00000000      0x26c
  .debug_frame   0x00000000       0x4c src/main.o
  .debug_frame   0x0000004c       0x58 src/uart.o
  .debug_frame   0x000000a4       0x50 src/pc13.o
@@ -228,5 +227,5 @@ LOAD linker stubs
  .debug_frame   0x00000144       0x34 tests/test_runner.o
  .debug_frame   0x00000178       0x38 tests/test_sram.o
  .debug_frame   0x000001b0       0x34 tests/test_hse.o
- .debug_frame   0x000001e4       0x34 tests/test_timer.o
- .debug_frame   0x00000218       0x5c tests/test_clock_measure.o
+ .debug_frame   0x000001e4       0x2c tests/test_timer.o
+ .debug_frame   0x00000210       0x5c tests/test_clock_measure.o

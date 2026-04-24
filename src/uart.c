@@ -36,3 +36,29 @@ void uart_print(const char *s) {
         USART1_DR = *s++;
     }
 }
+
+void uart2_write_char(char c) {
+    while (!(USART1_SR & USART_SR_TXE));
+    USART1_DR = c;
+}
+
+void uart2_write_str(const char *s) {
+    while (*s) uart2_write_char(*s++);
+}
+
+void uart2_write_uint(uint32_t v) {
+    char buf[16];
+    int i = 0;
+
+    if (v == 0) {
+        uart2_write_char('0');
+        return;
+    }
+
+    while (v > 0) {
+        buf[i++] = '0' + (v % 10);
+        v /= 10;
+    }
+
+    while (i--) uart2_write_char(buf[i]);
+}

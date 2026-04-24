@@ -2,7 +2,7 @@ CC      = arm-none-eabi-gcc
 AS      = arm-none-eabi-gcc
 OBJCOPY = arm-none-eabi-objcopy
 
-CFLAGS  = -mcpu=cortex-m4 -mthumb -O2 -g -Wall -ffreestanding -Iinclude
+CFLAGS  = -mcpu=cortex-m4 -mthumb -O0 -g -Wall -ffreestanding -Iinclude
 ASFLAGS = -mcpu=cortex-m4 -mthumb
 LDFLAGS = -T linker.ld -nostdlib -Wl,-Map=firmware.map
 

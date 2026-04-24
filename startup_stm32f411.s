@@ -4,6 +4,7 @@
 
 .global _estack
 .global Reset_Handler
+.global SysTick_Handler
 
 /* Top of stack (adjust if needed) */
 _estack = 0x20020000   /* 128 KB RAM end for STM32F411 */
@@ -30,8 +31,7 @@ g_pfnVectors:
     .word Default_Handler    /* DebugMon */
     .word 0                  /* Reserved */
     .word Default_Handler    /* PendSV */
-    .word Default_Handler    /* SysTick */
-
+    .word SysTick_Handler    /* SysTick */
     /* External interrupts (just fill with default) */
     .rept 82
     .word Default_Handler

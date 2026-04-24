@@ -110,6 +110,7 @@ void tim2_init(void) {
     TIM2_PSC = psc;
     TIM2_ARR = 0xFFFFFFFF;
 
+    TIM2_CNT = 0;
     TIM2_CR1 |= TIM_CR1_CEN;
 }
 
@@ -119,4 +120,81 @@ void delay_ms(unsigned int ms) {
     unsigned int start = TIM2_CNT;
 
     while ((TIM2_CNT - start) < ms);
+}
+
+static volatile unsigned int systick_ticks = 0;
+
+void systick_init(void) {
+    unsigned int sysclk = get_sysclk();  // from your clock-aware code
+
+    /* 1 ms reload */
+    unsigned int reload = (sysclk / 1000) - 1;
+
+    SYST_RVR = reload;
+    SYST_CVR = 0;
+
+    /* CPU clock + interrupt + enable */
+    SYST_CSR = SYST_CSR_CLKSOURCE | SYST_CSR_TICKINT | SYST_CSR_ENABLE;
+}
+
+void SysTick_Handler(void) {
+    systick_ticks++;
+}
+
+void delay_ms_systick(unsigned int ms) {
+    unsigned int start = systick_ticks;
+
+    while ((systick_ticks - start) < ms);
+}
+
+// Register addresses
+#define DEMCR      (*(volatile unsigned int*)0xE000EDFC)
+#define DWT_CTRL   (*(volatile unsigned int*)0xE0001000)
+#define DWT_CYCCNT (*(volatile unsigned int*)0xE0001004)
+
+// Bit definitions
+#define DEMCR_TRCENA      (1 << 24)
+#define DWT_CTRL_CYCCNTEN (1 << 0)
+
+void dwt_init(void) {
+    DEMCR |= DEMCR_TRCENA;       // Enable trace (enables DWT)
+    DWT_CYCCNT = 0;              // Reset cycle counter
+    DWT_CTRL |= DWT_CTRL_CYCCNTEN; // Enable cycle counter
+}
+
+// --- Register addresses ---
+#define RTC_TR        (*(volatile unsigned int*)0x40002800)
+#define DWT_CYCCNT    (*(volatile unsigned int*)0xE0001004)
+
+// --- Helpers ---
+static inline unsigned int bcd2dec(unsigned int bcd) {
+    return ((bcd >> 4) * 10) + (bcd & 0x0F);
+}
+
+static inline unsigned int rtc_seconds(void) {
+    // RTC_TR[6:0] = seconds in BCD
+    return bcd2dec(RTC_TR & 0x7F);
+}
+
+// --- Measurement ---
+unsigned int   measure_sysclk_hz(unsigned int seconds)
+{
+    unsigned int start_sec = rtc_seconds();
+
+    // wait for next second edge
+    while (rtc_seconds() == start_sec);
+
+    DWT_CYCCNT = 0;
+
+    unsigned int start = rtc_seconds();
+    unsigned int now;
+
+    // wait 'seconds' elapsed (handles wrap 59->0)
+    do {
+        now = rtc_seconds();
+    } while (((now + 60 - start) % 60) < seconds);
+
+    unsigned int cycles = DWT_CYCCNT;
+
+    return cycles / seconds;
 }

@@ -1,6 +1,8 @@
 #ifndef MIN_STM32F411_H
 #define MIN_STM32F411_H
 
+typedef unsigned int uint32_t;  // on a 32-bit MCU like Cortex-M4
+                                //
 #define PERIPH_BASE     0x40000000UL
 #define AHB1PERIPH_BASE (PERIPH_BASE + 0x00020000UL)
 #define APB1PERIPH_BASE (PERIPH_BASE + 0x00000000UL)
@@ -93,5 +95,15 @@
 #define RCC_CR_HSIRDY  (1 << 1)
 
 #define TIM2_CNT (*(volatile unsigned int *)(TIM2_BASE + 0x24))
+
+#define SYST_CSR (*(volatile unsigned int *)0xE000E010)
+#define SYST_RVR (*(volatile unsigned int *)0xE000E014)
+#define SYST_CVR (*(volatile unsigned int *)0xE000E018)
+
+/* Bits */
+#define SYST_CSR_ENABLE    (1 << 0)
+#define SYST_CSR_TICKINT   (1 << 1)
+#define SYST_CSR_CLKSOURCE (1 << 2)
+#define SYST_CSR_COUNTFLAG (1 << 16)
 
 #endif

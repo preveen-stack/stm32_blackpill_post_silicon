@@ -2,8 +2,8 @@ CC      = arm-none-eabi-gcc
 AS      = arm-none-eabi-gcc
 OBJCOPY = arm-none-eabi-objcopy
 
-CFLAGS  = -mcpu=cortex-m4 -mthumb -O0 -g -Wall -ffreestanding -Iinclude
-ASFLAGS = -mcpu=cortex-m4 -mthumb
+CFLAGS  = -mcpu=cortex-m4 -mthumb -O2 -g -Wall -ffreestanding -Iinclude -mfloat-abi=hard -mfpu=fpv4-sp-d16
+ASFLAGS = -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16
 LDFLAGS = -T linker.ld -nostdlib -Wl,-Map=firmware.map
 
 # Source files
@@ -13,6 +13,7 @@ src/uart.c \
 src/pc13.c \
 src/clock.c \
 src/timer.c \
+src/adc.c \
 tests/test_runner.c \
 tests/test_sram.c \
 tests/test_hse.c \

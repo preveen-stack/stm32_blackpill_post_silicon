@@ -5,6 +5,7 @@
 #include "test.h"
 #include "min_stm32f411.h" 
 #include <stdio.h>
+#include "adc.h"
 
 // Forward declarations
 int test_sram(void);
@@ -167,7 +168,8 @@ int main(void) {
 
     dwt_init();
 
-    
+    uart_print("Enabling fpu..\n");
+    enable_fpu();    
 
     //uart_print("\r\n=== POST SILICON TEST START ===\r\n");
 
@@ -190,5 +192,8 @@ int main(void) {
        uart_print("sysclock: ");
        uart2_write_uint(measure_sysclk_hz(4));
        uart_print("Hz\n");
+       uart_print("temperature: ");
+       uart2_write_uint(((unsigned ) read_internal_temp()) * 100);
+       uart_print("\n");
     } 
 }
